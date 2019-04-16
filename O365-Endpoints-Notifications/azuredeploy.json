@@ -1,0 +1,119 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "deploymentName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the deployment. This string will be used as a prefix for all components."
+            }
+        },
+        "notificationEmail": {
+            "type": "string",
+            "metadata": {
+                "description": "Email address for receiving notifications."
+            }
+        },
+        "instance": {
+            "defaultValue": "worldwide",
+            "allowedValues": [
+                "worldwide",
+                "usgovdod",
+                "usgovgcchigh",
+                "china",
+                "germany"
+            ],
+            "type": "string",
+            "metadata": {
+                "description": "Instance for which you want to receive notifications."
+            }
+        }
+    },
+    "variables": {
+        "uniqueString": "[uniqueString(resourceGroup().id)]",
+        "storageAccountName": "[concat(variables('uniqueString'),'storage')]",
+        "logicAppName": "[concat(variables('uniqueString'),'-Logic-App')]",
+        "functionAppName": "[concat(variables('uniqueString'),'-Function-App')]",
+        "O365ConnectionName": "[concat(variables('uniqueString'),'-O365-Connection')]",
+        "RssConnectionName": "[concat(variables('uniqueString'),'-RSS-Connection')]",
+        "appInsightsName": "[concat(variables('uniqueString'),'-App-Insights')]",
+        "hostingPlanName": "[concat(variables('uniqueString'),'-Hosting-Plan')]",
+
+        "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "[variables('storageAccountName')]",
+            "apiVersion": "2018-07-01",
+            "location": "[resourceGroup().location]",
+            "kind": "StorageV2",
+            "properties": {
+                "accountType": "Standard_LRS"
+            }
+        },
+        {
+            "name": "[variables('functionAppName')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2015-01-01",
+            "comments": "Deployment resource for the function app.",
+            "dependsOn": [
+                "[variables('storageAccountName')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "/function-app.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "uniqueString": {
+                        "value": "[variables('uniqueString')]"
+                    },
+                    "storageAccountName": {
+                        "value": "[variables('storageAccountName')]"
+                    },
+                    "O365ConnectionName": {
+                        "value": "[variables('O365ConnectionName')]"
+                    },
+                    "RssConnectionName": {
+                        "value": "[variables('RssConnectionName')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('logicAppName')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2015-01-01",
+            "comments": "Deployment resource for the logic app.",
+            "dependsOn": [
+                "[variables('functionAppName')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "/logic-app.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "uniqueString": {
+                        "value": "[variables('uniqueString')]"
+                    },
+                    "notificationEmail": {
+                        "value": "[parameters('notificationEmail')]"
+                    },
+                    "instance": {
+                        "value": "[parameters('instance')]"
+                    },
+                    "O365ConnectionName": {
+                        "value": "[variables('O365ConnectionName')]"
+                    },
+                    "RssConnectionName": {
+                        "value": "[variables('RssConnectionName')]"
+                    }
+                }
+            }
+        }
+    ]
+}

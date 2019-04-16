@@ -1,0 +1,223 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "uniqueString": {
+            "type": "string"
+        },
+        "notificationEmail": {
+            "type": "string"
+        },
+        "instance": {
+            "type": "string"
+        },
+        "O365ConnectionName": {
+            "type": "string"
+        },
+        "RssConnectionName": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "logicAppName": "[concat(parameters('uniqueString'),'-Logic-App')]",
+        "functionAppName": "[concat(parameters('uniqueString'),'-Function-App')]",
+        "code": "QaKwDiRd9HBWzlMBDG0EszLzPbYulgnAd9nA1Hq87SK1yk1jE10feQ==",
+        "since": "@{body('Parse_JSON')?['versions'][1]",
+        "emailSplit": "[split(parameters('notificationEmail'),'@')]",
+        "emailName": "[first(variables('emailSplit'))]",
+
+        "singleQuote": "'",
+        "rightParen": ")",
+
+        "parseJsonString": "@body('GET_Version_-_",
+        "parseJsonContent": "[concat(variables('parseJsonString'),parameters('instance'),variables('singleQuote'),variables('rightParen'))]",
+        "feedUrl": "[concat('https://endpoints.office.com/version/',parameters('instance'),'?format=rss&AllVersions&clientrequestid=bad1f103-bad1-f103-0123-456789abcdef')]",
+        "versionUri": "[concat('https://endpoints.office.com/version/',parameters('instance'),'?allversions&clientrequestid=bad1f103-bad1-f103-0123-456789abcdef')]",
+        "functionUri": "[concat('https://',variables('functionAppName'),'.azurewebsites.net/api/Format?code=',variables('code'),'&name=',variables('emailName'),'&instance=',parameters('instance'),'&clientrequestid=bad1f103-bad1-f103-0123-456789abcdef&since=',variables('since'),'}')]",
+        "actionGetVersion": "[concat('GET_Version_-_',parameters('instance'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "name": "[variables('logicAppName')]",
+            "apiVersion": "2016-06-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        },
+                        "$authentication": {
+                            "defaultValue": {},
+                            "type": "SecureObject"
+                        }
+                    },
+                    "triggers": {
+                        "When_a_feed_item_is_published": {
+                            "recurrence": {
+                                "interval": 1,
+                                "frequency": "Minute"
+                            },
+                            "splitOn": "@triggerBody()?['value']",
+                            "metadata": {
+                                "flowSystemMetadata": {
+                                    "swaggerOperationId": "OnNewFeed"
+                                }
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['rss']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/OnNewFeed",
+                                "queries": {
+                                    "feedUrl": "[variables('feedUrl')]"
+                                },
+                                "authentication": "@parameters('$authentication')"
+                            }
+                        }
+                    },
+                    "actions": {
+                        "[variables('actionGetVersion')]": {
+                            "runAfter": {},
+                            "type": "Http",
+                            "inputs": {
+                                "method": "GET",
+                                "uri": "[variables('versionUri')]"
+                            }
+                        },
+                        "Parse_JSON": {
+                            "runAfter": {
+                                "[variables('actionGetVersion')]": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ParseJson",
+                            "inputs": {
+                                "content": "[variables('parseJsonContent')]",
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "instance": {
+                                            "type": "string"
+                                        },
+                                        "latest": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "HTTP": {
+                            "runAfter": {
+                                "Parse_JSON": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Http",
+                            "inputs": {
+                                "method": "GET",
+                                "uri": "[variables('FunctionUri')]"
+                            }
+                        },
+                        "Send_an_email_(V2)": {
+                            "runAfter": {
+                                "HTTP": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "metadata": {
+                                "flowSystemMetadata": {
+                                    "swaggerOperationId": "SendEmailV2"
+                                }
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['office365']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "body": {
+                                    "To": "[parameters('notificationEmail')]",
+                                    "Subject": "O365 Endpoints RSS Notification - @{body('Parse_JSON')?['latest']}",
+                                    "Body": "<p>Changes to Office 365 IP Address and/or URLs have been published.<br>\n@{body('HTTP')}</p>"
+                                },
+                                "path": "/v2/Mail",
+                                "authentication": "@parameters('$authentication')"
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "office365": {
+                                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/', 'office365')]",
+                                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('O365ConnectionName'))]",
+                                "connectionName": "[parameters('O365ConnectionName')]"
+                            },
+                            "rss": {
+                                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/', 'rss')]",
+                                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('RssConnectionName'))]",
+                                "connectionName": "[parameters('RssConnectionName')]"
+                            }
+                        }
+                    }
+                },
+                "runtimeConfiguration": {
+                    "lifetime": {
+                        "unit": "Day",
+                        "count": 30
+                    },
+                    "collections": {
+                        "maximumItemCount": 100000
+                    },
+                    "performanceProfile": {
+                        "throttles": {
+                            "mode": "Medium"
+                        }
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/connections', parameters('O365ConnectionName'))]",
+                "[resourceId('Microsoft.Web/connections', parameters('RssConnectionName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/connections",
+            "name": "[parameters('O365ConnectionName')]",
+            "apiVersion": "2016-06-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "api": {
+                    "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/', 'office365')]"
+                },
+                "displayName": "[parameters('O365ConnectionName')]"
+            }
+        },
+        {
+            "type": "Microsoft.Web/connections",
+            "name": "[parameters('RssConnectionName')]",
+            "apiVersion": "2016-06-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "api": {
+                    "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/', 'rss')]"
+                },
+                "displayName": "[parameters('RssConnectionName')]"
+            }
+        }
+    ]
+}

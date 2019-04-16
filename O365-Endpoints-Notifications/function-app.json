@@ -1,0 +1,91 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "uniqueString": {
+            "type": "string"
+        },
+        "notificationEmail": {
+            "type": "string"
+        },
+        "instance": {
+            "type": "string"
+        },
+        "O365ConnectionName": {
+            "type": "string"
+        },
+        "RssConnectionName": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "uniqueString": "[parameters('uniqueString')]",
+        "storageAccountName": "[concat(variables('uniqueString'),'storage')]",
+        "logicAppName": "[concat(variables('uniqueString'),'-Logic-App')]",
+        "functionAppName": "[concat(variables('uniqueString'),'-Function-App')]",
+        "O365ConnectionName": "[concat(variables('uniqueString'),'-O365-Connection')]",
+        "RssConnectionName": "[concat(variables('uniqueString'),'-RSS-Connection')]",
+        "appInsightsName": "[concat(variables('uniqueString'),'-App-Insights')]",
+        "hostingPlanName": "[concat(variables('uniqueString'),'-Hosting-Plan')]",
+        "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2015-08-01",
+            "name": "[variables('hostingPlanName')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "name": "[variables('hostingPlanName')]",
+                "computeMode": "Dynamic",
+                "sku": "Dynamic"
+            }
+        },
+        {
+            "apiVersion": "2015-05-01",
+            "name": "[variables('appInsightsName')]",
+            "type": "Microsoft.Insights/components",
+            "kind": "web",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', variables('functionAppName'))]": "Resource"
+            },
+            "properties": {
+                "Application_Type": "web",
+                "ApplicationId": "[variables('functionAppName')]"
+            }
+        },
+        {
+            "apiVersion": "2015-08-01",
+            "type": "Microsoft.Web/sites",
+            "name": "[variables('functionAppName')]",
+            "location": "[resourceGroup().location]",
+            "kind": "functionapp",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+                "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]"
+            ],
+            "resources": [
+                {
+                   "apiVersion": "2015-08-01",
+                   "name": "appsettings",
+                   "type": "config",
+                   "dependsOn": [
+                     "[resourceId('Microsoft.Web/Sites', variables('functionAppName'))]",
+                     "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+                   ],
+                   "properties": {
+                     "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]",
+                     "AzureWebJobsDashboard": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]",
+                     "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]",
+                     "WEBSITE_CONTENTSHARE": "[toLower(variables('functionAppName'))]",
+                     "WEBSITE_NODE_DEFAULT_VERSION": "10.14.1",
+                     "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(resourceId('microsoft.insights/components/', variables('appInsightsName')), '2015-05-01').InstrumentationKey]",
+                     "FUNCTIONS_EXTENSION_VERSION": "~2",
+                     "FUNCTIONS_WORKER_RUNTIME": "node"
+                   }
+                }
+             ]
+        }
+    ]
+}
