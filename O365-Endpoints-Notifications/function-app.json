@@ -76,7 +76,20 @@
                      "FUNCTIONS_EXTENSION_VERSION": "~2",
                      "FUNCTIONS_WORKER_RUNTIME": "node",
                      "WEBSITE_RUN_FROM_ZIP": "[concat(parameters('resourceUri'),'/files.zip')]"
-                   }
+                   },
+                   "resources": [
+                    {
+                        "name": "MSDeploy",
+                        "type": "Extensions",
+                        "apiVersion": "2015-02-01",
+                        "dependsOn": [
+                            "[resourceId('Microsoft.Web/Sites', variables('functionAppName'))]"
+                        ],
+                        "properties": {
+                            "packageUri": "[concat(parameters('resourceUri'),'/files/files.zip')]"
+                        }
+                    }
+                ]
                 }
              ]
         }
