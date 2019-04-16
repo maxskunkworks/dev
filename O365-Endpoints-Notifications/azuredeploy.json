@@ -63,15 +63,6 @@
                 "parameters": {
                     "uniqueString": {
                         "value": "[variables('uniqueString')]"
-                    },
-                    "storageAccountName": {
-                        "value": "[variables('storageAccountName')]"
-                    },
-                    "O365ConnectionName": {
-                        "value": "[variables('O365ConnectionName')]"
-                    },
-                    "RssConnectionName": {
-                        "value": "[variables('RssConnectionName')]"
                     }
                 }
             }
@@ -99,12 +90,6 @@
                     },
                     "instance": {
                         "value": "[parameters('instance')]"
-                    },
-                    "O365ConnectionName": {
-                        "value": "[variables('O365ConnectionName')]"
-                    },
-                    "RssConnectionName": {
-                        "value": "[variables('RssConnectionName')]"
                     }
                 }
             }

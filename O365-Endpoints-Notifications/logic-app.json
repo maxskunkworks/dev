@@ -10,17 +10,14 @@
         },
         "instance": {
             "type": "string"
-        },
-        "O365ConnectionName": {
-            "type": "string"
-        },
-        "RssConnectionName": {
-            "type": "string"
         }
     },
     "variables": {
+        "uniqueString": "[parameters('uniqueString')]",
         "logicAppName": "[concat(parameters('uniqueString'),'-Logic-App')]",
         "functionAppName": "[concat(parameters('uniqueString'),'-Function-App')]",
+        "O365ConnectionName": "[concat(variables('uniqueString'),'-O365-Connection')]",
+        "RssConnectionName": "[concat(variables('uniqueString'),'-RSS-Connection')]",
         "code": "QaKwDiRd9HBWzlMBDG0EszLzPbYulgnAd9nA1Hq87SK1yk1jE10feQ==",
         "since": "@{body('Parse_JSON')?['versions'][1]",
         "emailSplit": "[split(parameters('notificationEmail'),'@')]",
@@ -164,13 +161,13 @@
                         "value": {
                             "office365": {
                                 "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/', 'office365')]",
-                                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('O365ConnectionName'))]",
-                                "connectionName": "[parameters('O365ConnectionName')]"
+                                "connectionId": "[resourceId('Microsoft.Web/connections', variables('O365ConnectionName'))]",
+                                "connectionName": "[variables('O365ConnectionName')]"
                             },
                             "rss": {
                                 "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/', 'rss')]",
-                                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('RssConnectionName'))]",
-                                "connectionName": "[parameters('RssConnectionName')]"
+                                "connectionId": "[resourceId('Microsoft.Web/connections', variables('RssConnectionName'))]",
+                                "connectionName": "[variables('RssConnectionName')]"
                             }
                         }
                     }
@@ -191,32 +188,32 @@
                 }
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Web/connections', parameters('O365ConnectionName'))]",
-                "[resourceId('Microsoft.Web/connections', parameters('RssConnectionName'))]"
+                "[resourceId('Microsoft.Web/connections', variables('O365ConnectionName'))]",
+                "[resourceId('Microsoft.Web/connections', variables('RssConnectionName'))]"
             ]
         },
         {
             "type": "Microsoft.Web/connections",
-            "name": "[parameters('O365ConnectionName')]",
+            "name": "[variables('O365ConnectionName')]",
             "apiVersion": "2016-06-01",
             "location": "[resourceGroup().location]",
             "properties": {
                 "api": {
                     "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/', 'office365')]"
                 },
-                "displayName": "[parameters('O365ConnectionName')]"
+                "displayName": "[variables('O365ConnectionName')]"
             }
         },
         {
             "type": "Microsoft.Web/connections",
-            "name": "[parameters('RssConnectionName')]",
+            "name": "[variables('RssConnectionName')]",
             "apiVersion": "2016-06-01",
             "location": "[resourceGroup().location]",
             "properties": {
                 "api": {
                     "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/', 'rss')]"
                 },
-                "displayName": "[parameters('RssConnectionName')]"
+                "displayName": "[variables('RssConnectionName')]"
             }
         }
     ]
