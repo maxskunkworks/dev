@@ -81,9 +81,9 @@
                     {
                         "name": "Format",
                         "type": "Extensions",
-                        "apiVersion": "2015-02-01",
+                        "apiVersion": "2015-08-01",
                         "dependsOn": [
-                            "[resourceId('Microsoft.Web/Sites', variables('functionAppName'))]"
+                            "appsettings"
                         ],
                         "properties": {
                             "packageUri": "[concat(parameters('resourceUri'),'/files/files.zip')]"
