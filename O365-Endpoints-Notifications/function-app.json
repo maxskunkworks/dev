@@ -83,7 +83,7 @@
                         "type": "Extensions",
                         "apiVersion": "2015-02-01",
                         "dependsOn": [
-                            "[resourceId(concat('Microsoft.Web/Sites',variables('functionAppName')),'/config/appsettings')]"
+                            "[resourceId('Microsoft.Web/Sites', variables('functionAppName'))]"
                         ],
                         "properties": {
                             "packageUri": "[concat(parameters('resourceUri'),'/files/files.zip')]"
