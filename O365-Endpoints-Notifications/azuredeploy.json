@@ -2,12 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "deploymentName": {
-            "type": "string",
-            "metadata": {
-                "description": "Name of the deployment. This string will be used as a prefix for all components."
-            }
-        },
         "notificationEmail": {
             "type": "string",
             "metadata": {
@@ -39,7 +33,7 @@
         "appInsightsName": "[concat(variables('uniqueString'),'-App-Insights')]",
         "hostingPlanName": "[concat(variables('uniqueString'),'-Hosting-Plan')]",
         "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
-        "resourceUri": "https://github.com/maxskunkworks/dev/tree/master/O365-Endpoints-Notifications/"
+        "resourceUri": "https://raw.githubusercontent.com/maxskunkworks/dev/master/O365-Endpoints-Notifications/"
     },
     "resources": [
         {
