@@ -38,8 +38,8 @@
         "RssConnectionName": "[concat(variables('uniqueString'),'-RSS-Connection')]",
         "appInsightsName": "[concat(variables('uniqueString'),'-App-Insights')]",
         "hostingPlanName": "[concat(variables('uniqueString'),'-Hosting-Plan')]",
-
-        "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+        "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+        "resourceUri": "https://github.com/maxskunkworks/dev/tree/master/O365-Endpoints-Notifications/"
     },
     "resources": [
         {
@@ -63,7 +63,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "/function-app.json",
+                    "uri": "[concat(variables('resourceUri'),'function-app.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -93,7 +93,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "/logic-app.json",
+                    "uri": "[concat(variables('resourceUri'),'logic-app.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
