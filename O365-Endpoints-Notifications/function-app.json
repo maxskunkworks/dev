@@ -7,6 +7,9 @@
         },
         "resourceUri": {
             "type": "string"
+        },
+        "notificationEmail": {
+            "type": "string"
         }
     },
     "variables": {
@@ -19,7 +22,9 @@
         "appInsightsName": "[concat(variables('uniqueString'),'-App-Insights')]",
         "hostingPlanName": "[concat(variables('uniqueString'),'-Hosting-Plan')]",
         "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
-        "functionName": "Format"
+        "functionName": "Format",
+        "emailSplit": "[split(parameters('notificationEmail'),'@')]",
+        "emailName": "[first(variables('emailSplit'))]"
     },
     "resources": [
         {
@@ -92,6 +97,12 @@
             "apiVersion": "2018-02-01",
             "properties": {
                 "mode": "Incremental",
+                "function_app_id": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name,'/providers/Microsoft.Web/sites/',variables('functionAppName'))]",
+                "script_root_path_href": "[concat('https://',variables('functionAppName'),'.scm.azurewebsites.net/api/vfs/site/wwwroot/',variables('functionName'),'/')]",
+                "script_href": "[concat('https://',variables('functionAppName'),'.scm.azurewebsites.net/api/vfs/site/wwwroot/',variables('functionName'),'/index.js')]",
+                "config_href": "[concat('https://',variables('functionAppName'),'.scm.azurewebsites.net/api/vfs/site/wwwroot/',variables('functionName'),'/function.json')]",
+                "secrets_file_href": "[concat('https://',variables('functionAppName'),'.scm.azurewebsites.net/api/vfs/data/functions/secrets/',variables('functionName'),'.json')]",
+                "href": "[concat('https://',variables('functionAppName'),'.scm.azurewebsites.net/api/functions/',variables('functionName'))]",
                 "config": {
                     "bindings": [
                         {
@@ -111,7 +122,8 @@
                     ],
                     "disabled": false
                 },
-                "files": null
+                "files": null,
+                "test_data": "[concat('{\"method\":\"get\",\"body\":\"\",\"queryStringParams\":[{\"name\":\"name\",\"value\":\"',variables('emailName'),'\"},{\"name\":\"instance\",\"value\":\"worldwide\"},{\"name\":\"clientrequestid\",\"value\":\"bad1f103-bad1-f103-0123-456789abcdef\"},{\"name\":\"since\",\"value\":\"0000000000\"}],\"headers\":[]}')]"
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', variables('functionAppName'))]"
