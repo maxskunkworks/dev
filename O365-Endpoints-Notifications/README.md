@@ -11,21 +11,29 @@ The **Office 365 Update Notification** template provisions an Azure Logic app th
 <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
-**NOTE**: You must specify an Office 365 email account for the solution to work.
+**NOTE**: You must specify an Office 365 email account for the solution to work without modification.
 
 ## Usage
 
 Deploying the solution is very simple, and no further configuration is required. However, you must authenticate with your Office 365 account before the solution can send emails to the email address you specified.
 
 1. Click the **Deploy to Azure** button to open the deployment UI in the Azure portal. Deployment should only take a couple of minutes.
-1. Navigate to the resource group, and click on the API Connection object named **<_unique_prefix_>-O365-Connection**. You will see that the connection is not authenticated.
-![alt text](images/O365-resources.png "Solution resources")
-1. Click **This connection is not authenticated**.
-![alt text](images/O365-connection-not-authenticated.png "Connection warning")
-1. In the _Edit_ blade, click **Authorize**.
-![alt text](images/O365-connection-authorize.png "Authorize the connection")
-1. Click **Save** to save your authorization token for future use.
-![alt text](images/O365-connection-authenticated.png "Authorize the connection")
+
+2. Navigate to the resource group, and click on the API Connection object named **<_unique_prefix_>-O365-Connection**. You will see that the connection is not authenticated.
+
+    ![alt text](images/O365-resources.png "Solution resources")
+
+3. Click **This connection is not authenticated**.
+
+    ![alt text](images/O365-connection-not-authenticated.png "Connection warning")
+
+4. In the Edit blade, click **Authorize**.
+
+    ![alt text](images/O365-connection-authorize.png "Authorize the connection")
+
+5. You should see the message _"Authorization was successful"_, and the **Authorize** button will be greyed out. Click **Save** to save your authorization token for future use.
+
+    ![alt text](images/O365-connection-authenticated.png "Authorize the connection")
 
 The authorization should be good fo one year, at which point you will need to return to this object and reauthorize the connection.
 
@@ -43,6 +51,7 @@ The following resources are deployed as part of the solution:
 ## Solution notes
 
 + You can modify the Logic app with additional functionality, such as adding an approval process or additional outputs targeted for your organization's particular workflow for updating Office 365 endpoints.
++ You can use a non-Office 365 email address by modifying the Logic app post-deployment with a standard email action instead of the Office 365 Email action.
 + See [Creating a Microsoft Flow to email yourself when an Office 365 IP/URL change occurs](https://github.com/pandrew1/Office365-IPURL-Samples/tree/master/FlowNotifications) for additional solution details and procedures for manually building the solution.
 
 ## Known issues
