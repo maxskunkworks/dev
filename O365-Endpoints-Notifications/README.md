@@ -19,11 +19,11 @@ Deploying the solution is very simple, and no further configuration is required.
 
 1. Click the **Deploy to Azure** button to open the deployment UI in the Azure portal. Deployment should only take a couple of minutes.
 
-2. Navigate to the resource group, and click on the API Connection object named **<_unique_prefix_>-O365-Connection**. You will see that the connection is not authenticated.
+2. Navigate to the resource group, and click on the API Connection object named **<_unique_prefix_>-O365-Connection**.
 
     ![alt text](images/O365-resources.png "Solution resources")
 
-3. Click **This connection is not authenticated**.
+3. In the API Connection blade, click **This connection is not authenticated**.
 
     ![alt text](images/O365-connection-not-authenticated.png "Connection warning")
 
