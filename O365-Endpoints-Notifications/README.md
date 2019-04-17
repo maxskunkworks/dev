@@ -37,7 +37,7 @@ Deploying the solution is very simple, and no further configuration is required.
 
     ![alt text](images/O365-connection-authenticated.png "Authorize the connection")
 
-The authorization should be good fo one year, at which point you will need to return to this object and reauthorize the connection.
+The authorization should be good for one year, at which point you will need to return to the O365 API Connection object and reauthorize the connection.
 
 ### Testing the solution
 
