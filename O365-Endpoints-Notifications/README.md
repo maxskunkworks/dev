@@ -4,6 +4,8 @@
 
 The **Office 365 Update Notification** template provisions an Azure Logic app that notifies the specified Office 365 email address when updates to the Office 365 endpoints are published, and an App Service Function app that converts the JSON output of endpoint updates to human-readable tables.
 
+![alt text](images/O365-notification-email.png "Notification email example")
+
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmaxskunkworks%2Fdev%2Fmaster%2FO365-Endpoints-Notifications%2Fazuredeploy.json" target="_blank">
 <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
