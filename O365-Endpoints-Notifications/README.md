@@ -15,7 +15,19 @@ The **Office 365 Update Notification** template provisions an Azure Logic app th
 
 ## Usage
 
-Click the "Deploy to Azure" button to open the deployment UI in the Azure portal.
+Deploying the solution is very simple, and no further configuration is required. However, you must authenticate with your Office 365 account before the solution can send emails to the email address you specified.
+
+1. Click the **Deploy to Azure** button to open the deployment UI in the Azure portal. Deployment should only take a couple of minutes.
+1. Navigate to the resource group, and click on the API Connection object named **<_unique_prefix_>-O365-Connection**. You will see that the connection is not authenticated.
+![alt text](images/O365-resources.png "Solution resources")
+1. Click **This connection is not authenticated**.
+![alt text](images/O365-connection-not-authenticated.png "Connection warning")
+1. In the _Edit_ blade, click **Authorize**.
+![alt text](images/O365-connection-authorize.png "Authorize the connection")
+1. Click **Save** to save your authorization token for future use.
+![alt text](images/O365-connection-authenticated.png "Authorize the connection")
+
+The authorization should be good fo one year, at which point you will need to return to this object and reauthorize the connection.
 
 ## Solution overview and deployed resources
 
