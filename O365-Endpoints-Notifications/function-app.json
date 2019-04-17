@@ -110,15 +110,15 @@
                             ]
                         },
                         {
+                        "name": "res",
                         "type": "http",
-                        "direction": "out",
-                        "name": "res"
+                        "direction": "out"
                         }
                     ],
                     "disabled": false
                 },
                 "files": null,
-                "test_data": "[concat('{\"method\":\"get\",\"body\":\"\",\"queryStringParams\":[{\"name\":\"name\",\"value\":\"',variables('emailName'),'\"},{\"name\":\"instance\",\"value\":\"worldwide\"},{\"name\":\"clientrequestid\",\"value\":\"bad1f103-bad1-f103-0123-456789abcdef\"},{\"name\":\"since\",\"value\":\"0000000000\"}],\"headers\":[]}')]"
+                "test_data": ""
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', variables('functionAppName'))]"
@@ -129,10 +129,6 @@
         "Key": {
             "type": "string",
             "value": "[listsecrets(resourceId('Microsoft.Web/sites/functions', variables('functionAppName'), variables('functionName')),'2018-02-01').key]"
-        },        
-        "Url": {
-            "type": "string",
-            "value": "[listsecrets(resourceId('Microsoft.Web/sites/functions', variables('functionAppName'), variables('functionName')),'2018-02-01').trigger_url]"
-        }        
+        }
     }
 }
