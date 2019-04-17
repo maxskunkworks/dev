@@ -18,7 +18,8 @@
         "RssConnectionName": "[concat(variables('uniqueString'),'-RSS-Connection')]",
         "appInsightsName": "[concat(variables('uniqueString'),'-App-Insights')]",
         "hostingPlanName": "[concat(variables('uniqueString'),'-Hosting-Plan')]",
-        "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+        "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+        "functionName": "Format"
     },
     "resources": [
         {
@@ -52,7 +53,7 @@
             }
         },
         {
-            "apiVersion": "2015-08-01",
+            "apiVersion": "2018-02-01",
             "type": "Microsoft.Web/sites",
             "name": "[variables('functionAppName')]",
             "location": "[resourceGroup().location]",
@@ -65,7 +66,7 @@
             },
             "resources": [
                 {
-                   "apiVersion": "2015-08-01",
+                   "apiVersion": "2016-08-01",
                    "name": "appsettings",
                    "type": "config",
                    "dependsOn": [
@@ -80,10 +81,51 @@
                      "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(resourceId('microsoft.insights/components/', variables('appInsightsName')), '2015-05-01').InstrumentationKey]",
                      "FUNCTIONS_EXTENSION_VERSION": "~2",
                      "FUNCTIONS_WORKER_RUNTIME": "node",
-                     "WEBSITE_RUN_FROM_PACKAGE": "[concat(parameters('resourceUri'),'/json-to-english.zip')]"
+                     "WEBSITE_RUN_FROM_PACKAGE": "[concat(parameters('resourceUri'),'files/json-to-english.zip')]"
                    }
                 }
              ]
+        },
+        {
+            "name": "[concat(variables('functionAppName'),'/',variables('functionName'))]",
+            "type": "Microsoft.Web/sites/functions",
+            "apiVersion": "2018-02-01",
+            "properties": {
+                "mode": "Incremental",
+                "config": {
+                    "bindings": [
+                        {
+                            "name": "req",
+                            "type": "httpTrigger",
+                            "authLevel": "function",
+                            "direction": "in",
+                            "methods": [
+                                "get"
+                            ]
+                        },
+                        {
+                        "type": "http",
+                        "direction": "out",
+                        "name": "res"
+                        }
+                    ],
+                    "disabled": false
+                },
+                "files": null
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', variables('functionAppName'))]"
+            ]
         }
-    ]
+    ],
+    "outputs": {
+        "Key": {
+            "type": "string",
+            "value": "[listsecrets(resourceId('Microsoft.Web/sites/functions', variables('functionAppName'), variables('functionName')),'2018-02-01').key]"
+        },        
+        "Url": {
+            "type": "string",
+            "value": "[listsecrets(resourceId('Microsoft.Web/sites/functions', variables('functionAppName'), variables('functionName')),'2018-02-01').trigger_url]"
+        }        
+    }
 }

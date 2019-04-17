@@ -84,4 +84,4 @@ Last update: _4/17/2019_
 ## Changelog
 
 + **4/16/2019**: Original commit
-+ **4/17/2019**: Updated function build zip file
++ **4/17/2019**: Updated function build zip file, updated function resource

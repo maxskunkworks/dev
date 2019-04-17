@@ -10,6 +10,9 @@
         },
         "instance": {
             "type": "string"
+        },
+        "key": {
+            "type": "string"
         }
     },
     "variables": {
@@ -18,7 +21,7 @@
         "functionAppName": "[concat(parameters('uniqueString'),'-Function-App')]",
         "O365ConnectionName": "[concat(variables('uniqueString'),'-O365-Connection')]",
         "RssConnectionName": "[concat(variables('uniqueString'),'-RSS-Connection')]",
-        "code": "QaKwDiRd9HBWzlMBDG0EszLzPbYulgnAd9nA1Hq87SK1yk1jE10feQ==",
+        "code": "[parameters('key')]",
         "since": "@{body('Parse_JSON')?['versions'][1]",
         "emailSplit": "[split(parameters('notificationEmail'),'@')]",
         "emailName": "[first(variables('emailSplit'))]",
