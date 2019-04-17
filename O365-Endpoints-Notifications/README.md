@@ -58,6 +58,11 @@ The following resources are deployed as part of the solution:
 
 ## Known issues
 
+## See also
+
++ [Office 365 IP Address and URL Web service](https://aka.ms/ipurlws)
++ [Creating a Microsoft Flow to email yourself when an Office 365 IP/URL change occurs](https://github.com/pandrew1/Office365-IPURL-Samples/tree/master/FlowNotifications)
+
 `Tags: Office 365 endpoints`
 ___
 Developed by the **MAX Skunkworks Lab**  
