@@ -12,7 +12,6 @@
     "variables": {
         "uniqueString": "[parameters('uniqueString')]",
         "storageAccountName": "[concat(variables('uniqueString'),'storage')]",
-        "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
         "logicAppName": "[concat(variables('uniqueString'),'-Logic-App')]",
         "functionAppName": "[concat(variables('uniqueString'),'-Function-App')]",
         "O365ConnectionName": "[concat(variables('uniqueString'),'-O365-Connection')]",
@@ -54,7 +53,6 @@
             "location": "[resourceGroup().location]",
             "kind": "functionapp",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
                 "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]"
             ],
             "resources": [
@@ -64,7 +62,6 @@
                    "type": "config",
                    "dependsOn": [
                      "[resourceId('Microsoft.Web/Sites', variables('functionAppName'))]",
-                     "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
                    ],
                    "properties": {
                      "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]",
