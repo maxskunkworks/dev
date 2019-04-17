@@ -39,6 +39,10 @@ Deploying the solution is very simple, and no further configuration is required.
 
 The authorization should be good fo one year, at which point you will need to return to this object and reauthorize the connection.
 
+### Testing the solution
+
+The Logic app is only triggered when a new RSS article is published, and this only occurs one or two times a month so it's important to be able to have some means to test the flow. You can use the test procedure in [Step 5 – Testing and troubleshooting the flow](https://github.com/pandrew1/Office365-IPURL-Samples/tree/master/FlowNotifications#step-5--testing-and-troubleshooting-the-flow) in the [manual deployment guide](https://github.com/pandrew1/Office365-IPURL-Samples/tree/master/FlowNotifications).
+
 ## Solution overview and deployed resources
 
 The following resources are deployed as part of the solution:
