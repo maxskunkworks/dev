@@ -28,7 +28,7 @@
 
         "parseJsonString": "@body('GET_Version_-_",
         "parseJsonContent": "[concat(variables('parseJsonString'),parameters('instance'),variables('singleQuote'),variables('rightParen'))]",
-        "feedUrl": "[concat('https://endpoints.office.com/version/',parameters('instance'),'?format=rss&AllVersions&clientrequestid=bad1f103-bad1-f103-0123-456789abcdef')]",
+        "feedUrl": "[concat('https://endpoints.office.com/version/',parameters('instance'),'?clientrequestid=b10c5ed1-bad1-445f-b386-b919946339a7&allVersions=true&format=RSS')]",
         "versionUri": "[concat('https://endpoints.office.com/version/',parameters('instance'),'?allversions&clientrequestid=bad1f103-bad1-f103-0123-456789abcdef')]",
         "functionUri": "[concat('https://',variables('functionAppName'),'.azurewebsites.net/api/Format?code=',variables('code'),'&name=',variables('emailName'),'&instance=',parameters('instance'),'&clientrequestid=bad1f103-bad1-f103-0123-456789abcdef&since=',variables('since'),'}')]",
         "actionGetVersion": "[concat('GET_Version_-_',parameters('instance'))]"
