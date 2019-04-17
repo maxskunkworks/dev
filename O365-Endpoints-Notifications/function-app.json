@@ -26,10 +26,12 @@
             "apiVersion": "2015-08-01",
             "name": "[variables('hostingPlanName')]",
             "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "Dynamic"
+            },
             "properties": {
                 "name": "[variables('hostingPlanName')]",
-                "computeMode": "Dynamic",
-                "sku": "Dynamic"
+                "computeMode": "Dynamic"
             }
         },
         {
