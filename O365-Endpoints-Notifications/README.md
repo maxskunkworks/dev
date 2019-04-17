@@ -19,9 +19,9 @@ The **Office 365 Update Notification** template provisions an Azure Logic app th
 
 Deploying the solution is very simple, and no further configuration is required. However, you must authenticate with your Office 365 account before the solution can send emails to the email address you specified.
 
-1. Click the **Deploy to Azure** button to open the deployment UI in the Azure portal. Deployment should only take a couple of minutes.
+1. Click the **Deploy to Azure** button to open the _Custom deployment_ blade in the Azure portal. When complete, click **Purchase**. Deployment should only take a couple of minutes.
 
-2. Navigate to the resource group, and click on the API Connection object named **<_unique_prefix_>-O365-Connection**.
+2. In the Azure portal, navigate to the resource group, and click on the API Connection object named **<_unique_prefix_>-O365-Connection**.
 
     ![alt text](images/O365-resources.png "Solution resources")
 
