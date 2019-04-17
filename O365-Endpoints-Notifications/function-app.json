@@ -98,9 +98,6 @@
             "properties": {
                 "mode": "Incremental",
                 "function_app_id": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name,'/providers/Microsoft.Web/sites/',variables('functionAppName'))]",
-                "script_root_path_href": "[concat('https://',variables('functionAppName'),'.scm.azurewebsites.net/api/vfs/site/wwwroot/',variables('functionName'),'/')]",
-                "script_href": "[concat('https://',variables('functionAppName'),'.scm.azurewebsites.net/api/vfs/site/wwwroot/',variables('functionName'),'/index.js')]",
-                "href": "[concat('https://',variables('functionAppName'),'.scm.azurewebsites.net/api/functions/',variables('functionName'))]",
                 "config": {
                     "bindings": [
                         {
