@@ -2,7 +2,7 @@
 
 **Time to deploy**: 2 minutes
 
-The **Office 365 Update Notification** template provisions an Azure Logic app that notifies the specified Office 365 email address when updates to the Office 365 endpoints are published, and an App Service Function app that converts the JSON output of endpoint updates to human-readable tables.
+The **Office 365 Update Notification** template provisions an Azure Logic app that notifies the specified Office 365 email address when updates are published to the [Office 365 Endpoints RSS feed](https://endpoints.office.com/version/worldwide?clientRequestId=b10c5ed1-bad1-445f-b386-b919946339a7&allVersions=true&format=RSS), and an App Service Function app that converts the JSON output of endpoint updates to human-readable tables.
 
 ![alt text](images/O365-notification-email.png "Notification email example")
 
@@ -43,7 +43,7 @@ The authorization should be good fo one year, at which point you will need to re
 
 The following resources are deployed as part of the solution:
 
-+ **Logic app**: Triggered by the Office 365 Endpoints RSS feed, the LOgic App notifies the specified email address when updates to the Office 365 endpoints are published.
++ **Logic app**: Triggered by the Office 365 Endpoints RSS feed, the Logic App contains the workflow that notifies your specified email address when updates to the Office 365 endpoints are published.
 + **App Service**: The App Service Function app converts the JSON output of endpoint updates to human-readable tables and add them to the email notification.
 + **App Service Plan**: Web services to support the App Service.
 + **App Insights**: Provides monitoring and logging for solution components.
