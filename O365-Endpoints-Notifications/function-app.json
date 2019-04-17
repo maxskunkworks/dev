@@ -55,13 +55,14 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]"
             ],
+            "properties": {},
             "resources": [
                 {
                    "apiVersion": "2015-08-01",
                    "name": "appsettings",
                    "type": "config",
                    "dependsOn": [
-                     "[resourceId('Microsoft.Web/Sites', variables('functionAppName'))]",
+                     "[resourceId('Microsoft.Web/Sites', variables('functionAppName'))]"
                    ],
                    "properties": {
                      "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]",
