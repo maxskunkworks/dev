@@ -58,8 +58,8 @@ The following resources are deployed as part of the solution:
 + **Logic app**: Triggered by the Office 365 Endpoints RSS feed, the Logic App contains the workflow that notifies your specified email address when updates to the Office 365 endpoints are published.
 + **App Service**: The App Service Function app converts the JSON output of endpoint updates to human-readable tables and add them to the email notification.
 + **App Service Plan**: Web services to support the App Service.
-+ **App Insights**: Provides monitoring and logging for solution components.
-+ **API Connections**: Connects the solution to an Office 365 email account and the RSS feed.
++ **Application Insights**: Provides monitoring and logging for solution components.
++ **API Connections**: Connects the solution to the specified Office 365 email account and the Office 365 IP and URL RSS feed.
 + **Storage account**: Storage for log files and usage/diagnostics data.
 
 ## Solution notes
