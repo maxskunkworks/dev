@@ -70,51 +70,45 @@
             "properties": {
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
                 "siteConfig": {
-                    "alwaysOn": true,
-                    "cors": {
-                      "allowedOrigins": [
-                        "*"
-                      ]
-                    },
                     "appSettings": [
-                      {
-                        "name": "AzureWebJobsStorage",
-                        "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]"
-                      },
-                      {
-                        "name": "AzureWebJobsDashboard",
-                        "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]"
-                      },
-                      {
-                      "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
-                      "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]"
-                      },
-                                  {
-                      "name": "WEBSITE_CONTENTSHARE",
-                      "value": "[toLower(variables('functionAppName'))]"
-                      },
-                                  {
-                      "name": "WEBSITE_NODE_DEFAULT_VERSION",
-                      "value": "10.14.1"
-                      },
-                                  {
-                      "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-                      "value": "[reference(resourceId('microsoft.insights/components/', variables('appInsightsName')), '2015-05-01').InstrumentationKey]"
-                      },
-                                  {
-                      "name": "FUNCTIONS_EXTENSION_VERSION",
-                      "value": "~2"
-                      },
-                                  {
-                      "name": "FUNCTIONS_WORKER_RUNTIME",
-                      "value": "node"
-                      },
-                                  {
-                      "name": "WEBSITE_RUN_FROM_PACKAGE",
-                      "value": "[concat(parameters('resourceUri'),'files/json-to-english.zip')]"
-                      }
+                        {
+                            "name": "AzureWebJobsStorage",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]"
+                        },
+                        {
+                            "name": "AzureWebJobsDashboard",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]"
+                        },
+                        {
+                            "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]"
+                        },
+                        {
+                            "name": "WEBSITE_CONTENTSHARE",
+                            "value": "[toLower(variables('functionAppName'))]"
+                        },
+                        {
+                            "name": "WEBSITE_NODE_DEFAULT_VERSION",
+                            "value": "10.14.1"
+                        },
+                        {
+                            "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                            "value": "[reference(resourceId('microsoft.insights/components/', variables('appInsightsName')), '2015-05-01').InstrumentationKey]"
+                        },
+                        {
+                            "name": "FUNCTIONS_EXTENSION_VERSION",
+                            "value": "~2"
+                        },
+                        {
+                            "name": "FUNCTIONS_WORKER_RUNTIME",
+                            "value": "node"
+                        },
+                        {
+                            "name": "WEBSITE_RUN_FROM_PACKAGE",
+                            "value": "[concat(parameters('resourceUri'),'files/json-to-english.zip')]"
+                        }
                     ]
-                  }
+                }
             }
         },
         {
@@ -137,9 +131,9 @@
                             ]
                         },
                         {
-                        "name": "res",
-                        "type": "http",
-                        "direction": "out"
+                            "name": "res",
+                            "type": "http",
+                            "direction": "out"
                         }
                     ],
                     "disabled": false
