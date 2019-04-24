@@ -100,18 +100,10 @@
                     },
                     "instance": {
                         "value": "[parameters('instance')]"
-                    },
-                    "key": {
-                        "value": "[reference(variables('functionAppName'),'2018-02-01').outputs.Key.value]"
                     }
                 }
             }
         }
     ],
-    "outputs": {
-        "Key":{
-            "type": "string",
-            "value": "[reference(variables('functionAppName'),'2018-02-01').outputs.Key.value]"
-        }
-    }
+    "outputs": {}
 }

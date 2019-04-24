@@ -76,10 +76,6 @@
                             "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]"
                         },
                         {
-                            "name": "AzureWebJobsDashboard",
-                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]"
-                        },
-                        {
                             "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
                             "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]"
                         },
@@ -121,10 +117,5 @@
             ]
         }
     ],
-    "outputs": {
-        "Key": {
-            "type": "string",
-            "value": "[listsecrets(resourceId('Microsoft.Web/sites/functions', variables('functionAppName'), variables('functionName')),'2018-02-01').key]"
-        }
-    }
+    "outputs": {}
 }
