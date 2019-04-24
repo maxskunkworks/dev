@@ -30,6 +30,7 @@
     "resources": [
         {
             "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2015-08-01",
             "name": "[variables('hostingPlanName')]",
             "location": "[resourceGroup().location]",
             "sku": {
@@ -44,6 +45,7 @@
             }
         },
         {
+            "apiVersion": "2015-05-01",
             "name": "[variables('appInsightsName')]",
             "type": "Microsoft.Insights/components",
             "kind": "web",
@@ -57,6 +59,7 @@
             }
         },
         {
+            "apiVersion": "2018-02-01",
             "type": "Microsoft.Web/sites",
             "name": "[variables('functionAppName')]",
             "location": "[resourceGroup().location]",
@@ -69,6 +72,7 @@
             },
             "resources": [
                 {
+                   "apiVersion": "2016-08-01",
                    "name": "appsettings",
                    "type": "config",
                    "dependsOn": [
@@ -91,6 +95,7 @@
         {
             "name": "[concat(variables('functionAppName'),'/',variables('functionName'))]",
             "type": "Microsoft.Web/sites/functions",
+            "apiVersion": "2018-02-01",
             "properties": {
                 "mode": "Incremental",
                 "function_app_id": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name,'/providers/Microsoft.Web/sites/',variables('functionAppName'))]",
