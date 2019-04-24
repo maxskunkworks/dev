@@ -2,7 +2,7 @@
 
 **Time to deploy**: 2 minutes
 
-The **Office 365 Update Notification** template provisions an Azure Logic app that notifies the specified Office 365 email address when updates are published to the [Office 365 Endpoints RSS feed](https://endpoints.office.com/version/worldwide?clientRequestId=b10c5ed1-bad1-445f-b386-b919946339a7&allVersions=true&format=RSS), and an App Service Function app that converts the JSON output of endpoint updates to human-readable tables.
+The **Office 365 Update Notification** template provisions an Azure Logic app that notifies the specified Office 365 email address when updates are published to the [Office 365 Endpoints RSS feed](https://endpoints.office.com/version/worldwide?clientRequestId=b10c5ed1-bad1-445f-b386-b919946339a7&allVersions=true&format=RSS) and an App Service that converts the JSON output of endpoint updates to human-readable tables to make notification emails easier to read.
 
 ![alt text](images/O365-notification-email.png "Notification email example")
 
@@ -19,17 +19,25 @@ The **Office 365 Update Notification** template provisions an Azure Logic app th
 
 Deploying the solution is very simple, and no further configuration is required. However, before the solution will work, you must authenticate with your Office 365 account before the solution can send emails to the email address you specified as described below.
 
-1. Click the **Deploy to Azure** button to open the _Custom deployment_ blade in the Azure portal. When complete, click **Purchase**. Deployment should only take a couple of minutes.
+1. Click the **Deploy to Azure** button to open the _Custom deployment_ blade in the Azure portal.
+
+    a. In the _BASICS_ section, choose the subscription, resource group and location for the deployment.
+
+    b. In the _SETTINGS_ section, in the **Notification Email** field, enter the email address for notifications.
+
+    c. In the **Instance** field, use the drop-down menu to choose the instance for which you want to receive notifications. Unless you know you need a different instance, use the default setting of **worldwide**.
+
+    When complete, click **Purchase**. Deployment should only take a couple of minutes.
 
 2. In the Azure portal, navigate to the resource group, and click on the API Connection object named **<_unique_prefix_>-O365-Connection**.
 
     ![alt text](images/O365-resources.png "Solution resources")
 
-3. In the API Connection blade, click **This connection is not authenticated**.
+3. In the _API Connection_ blade, click **This connection is not authenticated**.
 
     ![alt text](images/O365-connection-not-authenticated.png "Connection warning")
 
-4. In the Edit blade, click **Authorize**.
+4. In the _Edit_ blade, click **Authorize**.
 
     ![alt text](images/O365-connection-authorize.png "Authorize the connection")
 
@@ -37,7 +45,7 @@ Deploying the solution is very simple, and no further configuration is required.
 
     ![alt text](images/O365-connection-authenticated.png "Authorize the connection")
 
-The authorization should be good for one year, at which point you will need to return to the O365 API Connection object and reauthorize the connection.
+The Office 365 authorization should be good for one year, at which point you will need to return to the O365 API Connection object and reauthorize the connection.
 
 ### Testing the solution
 
