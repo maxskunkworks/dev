@@ -1,4 +1,4 @@
-# Office 365 Update Notification (v0.2)
+# Office 365 Update Notification (v0.9)
 
 **Time to deploy**: 2 minutes
 
@@ -17,7 +17,7 @@ The **Office 365 Update Notification** template provisions an Azure Logic app th
 
 ## Usage
 
-Deploying the solution is very simple, and no further configuration is required. However, you must authenticate with your Office 365 account before the solution can send emails to the email address you specified.
+Deploying the solution is very simple, and no further configuration is required. However, before the solution will work, you must authenticate with your Office 365 account before the solution can send emails to the email address you specified as described below.
 
 1. Click the **Deploy to Azure** button to open the _Custom deployment_ blade in the Azure portal. When complete, click **Purchase**. Deployment should only take a couple of minutes.
 
@@ -52,7 +52,7 @@ The following resources are deployed as part of the solution:
 + **App Service Plan**: Web services to support the App Service.
 + **App Insights**: Provides monitoring and logging for solution components.
 + **API Connections**: Connects the solution to an Office 365 email account and the RSS feed.
-+ **Storage account**: Storage for log files and usage/dignostics data.
++ **Storage account**: Storage for log files and usage/diagnostics data.
 
 ## Solution notes
 
@@ -86,3 +86,4 @@ Last update: _4/17/2019_
 
 + **4/16/2019**: Original commit
 + **4/17/2019**: Updated function build zip file, updated function resource
++ **4/24/2019**: Tested successfully. Submitted for peer review.
