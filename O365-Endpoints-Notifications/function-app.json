@@ -106,7 +106,6 @@
                         {
                             "name": "req",
                             "type": "httpTrigger",
-                            "authLevel": "function",
                             "direction": "in",
                             "methods": [
                                 "get"
