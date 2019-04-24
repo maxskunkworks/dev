@@ -59,7 +59,7 @@
             }
         },
         {
-            "apiVersion": "2018-02-01",
+            "apiVersion": "2016-08-01",
             "type": "Microsoft.Web/sites",
             "name": "[variables('functionAppName')]",
             "location": "[resourceGroup().location]",
@@ -102,14 +102,23 @@
                         {
                             "name": "FUNCTIONS_WORKER_RUNTIME",
                             "value": "node"
-                        },
-                        {
-                            "name": "WEBSITE_RUN_FROM_PACKAGE",
-                            "value": "[concat(parameters('resourceUri'),'files/FormatEmail.zip')]"
                         }
                     ]
                 }
-            }
+            },
+            "resources": [
+                {
+                    "name": "MSDeploy",
+                    "type": "extensions",
+                    "apiVersion": "2016-08-01",
+                    "dependsOn": [
+                      "[resourceId('Microsoft.Web/Sites',variables('functionAppName'))]"
+                    ],
+                    "properties": {
+                      "packageUri": "[concat(parameters('resourceUri'),'files/FormatEmail.zip')]"
+                    }
+                  }
+            ]
         }
     ],
     "outputs": {
