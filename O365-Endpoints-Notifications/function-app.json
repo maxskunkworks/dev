@@ -99,6 +99,7 @@
             "properties": {
                 "mode": "Incremental",
                 "function_app_id": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name,'/providers/Microsoft.Web/sites/',variables('functionAppName'))]",
+                "config_href": "[concat('https://',variables('functionAppName'),'.scm.azurewebsites.net/api/vfs/site/wwwroot/',variables('functionName'),'/function.json')]",
                 "config": {
                     "bindings": [
                         {
