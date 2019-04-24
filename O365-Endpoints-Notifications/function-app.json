@@ -23,7 +23,7 @@
         "appInsightsName": "[concat(variables('uniqueString'),'-App-Insights')]",
         "hostingPlanName": "[concat(variables('uniqueString'),'-Hosting-Plan')]",
         "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
-        "functionName": "Format",
+        "functionName": "FormatEmail",
         "emailSplit": "[split(parameters('notificationEmail'),'@')]",
         "emailName": "[first(variables('emailSplit'))]"
     },
@@ -105,45 +105,11 @@
                         },
                         {
                             "name": "WEBSITE_RUN_FROM_PACKAGE",
-                            "value": "[concat(parameters('resourceUri'),'files/json-to-english.zip')]"
+                            "value": "[concat(parameters('resourceUri'),'files/FormatEmail.zip')]"
                         }
                     ]
                 }
             }
-        },
-        {
-            "name": "[concat(variables('functionAppName'),'/',variables('functionName'))]",
-            "type": "Microsoft.Web/sites/functions",
-            "apiVersion": "2018-02-01",
-            "properties": {
-                "mode": "Incremental",
-                "function_app_id": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name,'/providers/Microsoft.Web/sites/',variables('functionAppName'))]",
-                "config_href": "[concat('https://',variables('functionAppName'),'.scm.azurewebsites.net/api/vfs/site/wwwroot/',variables('functionName'),'/function.json')]",
-                "script_href": "[concat('https://',variables('functionAppName'),'.scm.azurewebsites.net/api/vfs/site/wwwroot/',variables('functionName'),'/index.js')]",
-                "config": {
-                    "bindings": [
-                        {
-                            "name": "req",
-                            "type": "httpTrigger",
-                            "direction": "in",
-                            "methods": [
-                                "get"
-                            ]
-                        },
-                        {
-                            "name": "res",
-                            "type": "http",
-                            "direction": "out"
-                        }
-                    ],
-                    "disabled": false
-                },
-                "files": null,
-                "test_data": ""
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', variables('functionAppName'))]"
-            ]
         }
     ],
     "outputs": {
