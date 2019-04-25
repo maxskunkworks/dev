@@ -1,6 +1,7 @@
 # Office 365 Update Notification (v0.9)
 
-**Time to deploy**: 2 minutes
++ **Time to deploy**: 2 minutes
++ **Cost**: ~$1.00 per month
 
 The **Office 365 Update Notification** template provisions an Azure Logic app that notifies the specified Office 365 email address when updates are published to the [Office 365 Endpoints RSS feed](https://endpoints.office.com/version/worldwide?clientRequestId=b10c5ed1-bad1-445f-b386-b919946339a7&allVersions=true&format=RSS) and an App Service that converts the JSON output of endpoint updates to human-readable tables to make notification emails easier to read.
 
