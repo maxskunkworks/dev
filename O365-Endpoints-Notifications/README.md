@@ -42,7 +42,7 @@ Deploying the solution is very simple, and no further configuration is required.
 
     ![alt text](images/O365-connection-authorize.png "Authorize the connection")
 
-5. In the authentication window that pops up, enter your Office 365 account details. This experience differs depending on your browser and Office 365 tenant settings.
+5. In the authentication window that pops up, enter your Office 365 credentials. This experience differs depending on your browser and Office 365 tenant settings.
 
 6. You should see the message _"Authorization was successful"_, and the **Authorize** button will be greyed out. Click **Save** to save your authorization token for future use.
 
