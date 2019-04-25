@@ -18,7 +18,7 @@ The **Office 365 Update Notification** template provisions an Azure Logic app th
 
 ## Usage
 
-Deploying the solution is very simple, and no further configuration is required. However, before the solution will work, you must authenticate with your Office 365 account before the solution can send emails to the email address you specified as described below.
+Deploying the solution is very simple, and no further configuration is required. However, you must authenticate with your Office 365 account before the solution can send emails to the email address you specified as described below.
 
 1. Click the **Deploy to Azure** button to open the _Custom deployment_ blade in the Azure portal.
 
