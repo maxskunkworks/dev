@@ -20,6 +20,8 @@ The **Office 365 Update Notification** template provisions an Azure Logic app th
 
 Deploying the solution is very simple, and no further configuration is required. However, you must authenticate with your Office 365 account before the solution can send emails to the email address you specified as described below.
 
+**NOTE**: This template can only be deployed to certain locations. See the [Known issues](O365-Endpoints-Notifications#known-issues) section for details.
+
 1. Click the **Deploy to Azure** button to open the _Custom deployment_ blade in the Azure portal.
 
     a. In the _BASICS_ section, choose the subscription, resource group and location for the deployment.
@@ -73,6 +75,23 @@ The following resources are deployed as part of the solution:
 + You can get detailed realtime information about your Function app from the Kudu service at 'https://\<_unique-prefix_>-function-app.scm.azurewebsites.net/'.
 
 ## Known issues
+
++ The resource type Microsoft.Insights/components is only supported in certain locations as of the last update to this template. To avoid deployment failures, deploy the template to one of the following locations:
+  + East US
+  + South Central US
+  + North Europe
+  + West Europe
+  + Southeast Asia
+  + West US 2
+  + UK South
+  + Canada Central
+  + Central India
+  + Japan East
+  + Australia East
+  + Korea Central
+  + France Central
+  + East US 2
+  + East Asia
 
 ## See also
 
