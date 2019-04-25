@@ -20,7 +20,7 @@ The **Office 365 Update Notification** template provisions an Azure Logic app th
 
 Deploying the solution is very simple, and no further configuration is required. However, you must authenticate with your Office 365 account before the solution can send emails to the email address you specified as described below.
 
-**NOTE**: This template can only be deployed to certain locations. See the [Known issues](O365-Endpoints-Notifications#known-issues) section for details.
+**NOTE**: This template can only be deployed to certain locations. See the [Known issues](https://github.com/maxskunkworks/dev/tree/master/O365-Endpoints-Notifications#known-issues) section for details.
 
 1. Click the **Deploy to Azure** button to open the _Custom deployment_ blade in the Azure portal.
 
