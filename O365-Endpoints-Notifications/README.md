@@ -1,9 +1,9 @@
-# Office 365 Update Notification (v0.9)
+# Office 365 Update Notification (v1.0)
 
 + **Time to deploy**: 2 minutes
 + **Cost**: ~$1.00 per month
 
-The **Office 365 Update Notification** template provisions an Azure Logic app that notifies the specified Office 365 email address when updates are published to the [Office 365 Endpoints RSS feed](https://endpoints.office.com/version/worldwide?clientRequestId=b10c5ed1-bad1-445f-b386-b919946339a7&allVersions=true&format=RSS) and an App Service that converts the JSON output of endpoint updates to human-readable tables to make notification emails easier to read.
+The **Office 365 Update Notification** template provisions a set of Azure resources that sends email notifications to a specified Office 365 email address when updates are published to the [Office 365 Endpoints RSS feed](https://endpoints.office.com/version/worldwide?clientRequestId=b10c5ed1-bad1-445f-b386-b919946339a7&allVersions=true&format=RSS). You can specify the Office 365 instance for which you want to be notified (i.e. Worldwide, China etc.).
 
 ![alt text](images/O365-notification-email.png "Notification email example")
 
@@ -20,7 +20,7 @@ The **Office 365 Update Notification** template provisions an Azure Logic app th
 
 Deploying the solution is very simple, and no further configuration is required. However, you must authenticate with your Office 365 account before the solution can send emails to the email address you specified as described below.
 
-**NOTE**: This template can only be deployed to certain locations. See the [Known issues](https://github.com/maxskunkworks/dev/tree/master/O365-Endpoints-Notifications#known-issues) section for details.
+**IMPORTANT**: This template can only be deployed to certain locations. See the [Known issues](https://github.com/maxskunkworks/dev/tree/master/O365-Endpoints-Notifications#known-issues) section for details.
 
 1. Click the **Deploy to Azure** button to open the _Custom deployment_ blade in the Azure portal.
 
@@ -30,7 +30,7 @@ Deploying the solution is very simple, and no further configuration is required.
 
     c. In the **Instance** field, use the drop-down menu to choose the instance for which you want to receive notifications. Unless you know you need a different instance, use the default setting of **worldwide**.
 
-    When complete, click **Purchase**. Deployment should only take a couple of minutes.
+    When complete, click **Purchase**. Deployment should only take a couple of minutes. Next, you need to authenticate the O365 API connection to your Office 365 tenant.
 
 2. In the Azure portal, navigate to the resource group, and click on the API Connection object named **<_unique_prefix_>-O365-Connection**.
 
@@ -54,18 +54,20 @@ The Office 365 authorization should be good for one year, at which point you wil
 
 ### Testing the solution
 
-The Logic app is triggered when a new RSS article is published. This only occurs one or two times a month so it's important to be able to have some means to test the solution. You can use the test procedure in [Step 5 – Testing and troubleshooting the flow](https://github.com/pandrew1/Office365-IPURL-Samples/tree/master/FlowNotifications#step-5--testing-and-troubleshooting-the-flow) in the [manual deployment guide](https://github.com/pandrew1/Office365-IPURL-Samples/tree/master/FlowNotifications) as a guide, substituting references to _Microsoft Flow_ with the **Logic app** in your solution. Microsoft Flow is built on the Azure Logic app feature, so the process is very similar.
+The logic app is triggered when a new RSS article is published. This only occurs one or two times a month so it's important to be able to have some means to test the solution. You can use the test procedure in [Step 5 – Testing and troubleshooting the flow](https://github.com/pandrew1/Office365-IPURL-Samples/tree/master/FlowNotifications#step-5--testing-and-troubleshooting-the-flow) in the [manual deployment guide](https://github.com/pandrew1/Office365-IPURL-Samples/tree/master/FlowNotifications) as a guide, substituting references to _Microsoft Flow_ with the **Logic app** in your solution. Microsoft Flow is built on the Azure Logic App feature, so the process is very similar.
 
 ## Solution overview and deployed resources
 
 The following resources are deployed as part of the solution:
 
-+ **Logic app**: Triggered by the Office 365 Endpoints RSS feed, the Logic App contains the workflow that notifies your specified email address when updates to the Office 365 endpoints are published.
-+ **App Service**: The App Service Function app converts the JSON output of endpoint updates to human-readable tables and add them to the email notification.
-+ **App Service Plan**: Web services to support the App Service.
-+ **Application Insights**: Provides monitoring and logging for solution components.
 + **API Connections**: Connects the solution to the specified Office 365 email account and the Office 365 IP and URL RSS feed.
++ **App Service**: The App Service function app converts the JSON output of endpoint updates to human-readable tables to make notification emails easier to read.
++ **App Service plan**: Web services to support the app service.
++ **Application Insights**: Provides monitoring and logging for solution components.
++ **Logic app**: Triggered by the Office 365 Endpoints RSS feed, the logic app contains the workflow that notifies your specified email address when updates to the Office 365 endpoints are published.
 + **Storage account**: Storage for log files and usage/diagnostics data.
+
+    ![alt text](images/O365-notification-deployment.png "Deployment resources grouped by type")
 
 ## Solution notes
 
@@ -76,7 +78,8 @@ The following resources are deployed as part of the solution:
 
 ## Known issues
 
-+ The resource type Microsoft.Insights/components is only supported in certain locations as of the last update to this template. To avoid deployment failures, deploy the template to one of the following locations:
++ The resource type _Microsoft.Insights/components_ is only supported in certain locations as of the last update to this template. To avoid deployment failures, deploy the template to one of the following locations:
+
   + East US
   + South Central US
   + North Europe
@@ -95,10 +98,10 @@ The following resources are deployed as part of the solution:
 
 ## See also
 
-+ [Office 365 IP Address and URL Web service](https://aka.ms/ipurlws)
 + [Creating a Microsoft Flow to email yourself when an Office 365 IP/URL change occurs](https://github.com/pandrew1/Office365-IPURL-Samples/tree/master/FlowNotifications)
++ [Office 365 IP Address and URL Web service](https://aka.ms/ipurlws)
 
-`Tags: Office 365 endpoints`
+`Tags: Office 365 endpoints, Office 365 IP Address and URL Web service`
 ___
 Developed by the **MAX Skunkworks Lab**  
 Authors:
@@ -110,10 +113,11 @@ https://github.com/maxskunkworks
 
 ![alt text](https://raw.githubusercontent.com/oualabadmins/lab_deploy/master/common/images/maxskunkworkslogo-small.jpg "MAX Skunkworks")
 
-Last update: _4/17/2019_
+Last update: _4/30/2019_
 
 ## Changelog
 
 + **4/16/2019**: Original commit
 + **4/17/2019**: Updated function build zip file, updated function resource
 + **4/24/2019**: Tested successfully. Submitted for peer review.
++ **4/30/2019**: Confirmed end-to-end functionality. Updated images, added instance value to notification email.
