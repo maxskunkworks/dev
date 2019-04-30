@@ -26,11 +26,12 @@
         "singleQuote": "'",
         "rightParen": ")",
 
+        "clientRequestId": "[guid(resourceGroup().id)]",
         "parseJsonString": "@body('GET_Version_-_",
         "parseJsonContent": "[concat(variables('parseJsonString'),parameters('instance'),variables('singleQuote'),variables('rightParen'))]",
-        "feedUrl": "[concat('https://endpoints.office.com/version/',parameters('instance'),'?clientrequestid=b10c5ed1-bad1-445f-b386-b919946339a7&allVersions=true&format=RSS')]",
-        "versionUri": "[concat('https://endpoints.office.com/version/',parameters('instance'),'?allversions&clientrequestid=bad1f103-bad1-f103-0123-456789abcdef')]",
-        "functionUri": "[concat('https://',variables('functionAppName'),'.azurewebsites.net/api/FormatEmail?name=',variables('emailName'),'&instance=',parameters('instance'),'&clientrequestid=bad1f103-bad1-f103-0123-456789abcdef&since=',variables('since'),'}')]",
+        "feedUrl": "[concat('https://endpoints.office.com/version/',parameters('instance'),'?clientrequestid=',variables('clientRequestId'),'&allVersions=true&format=RSS')]",
+        "versionUri": "[concat('https://endpoints.office.com/version/',parameters('instance'),'?allversions&clientrequestid=',variables('clientRequestId'))]",
+        "functionUri": "[concat('https://',variables('functionAppName'),'.azurewebsites.net/api/FormatEmail?name=',variables('emailName'),'&instance=',parameters('instance'),'&clientrequestid=',variables('clientRequestId'),'&since=',variables('since'),'}')]",
         "actionGetVersion": "[concat('GET_Version_-_',parameters('instance'))]"
     },
     "resources": [
