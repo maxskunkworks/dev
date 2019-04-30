@@ -149,7 +149,7 @@
                                 "body": {
                                     "To": "[parameters('notificationEmail')]",
                                     "Subject": "Office 365 Endpoints Update - @{body('Parse_JSON')?['instance']} @{body('Parse_JSON')?['latest']}",
-                                    "Body": "<p>Changes to Office 365 IP addresses and/or URLs for the @{body('Parse_JSON')?['instance']} instance have been published.<br>\n@{body('GET_Updates')}</p>"
+                                    "Body": "<p>Changes to Office 365 IP addresses and/or URLs for the <b>@{body('Parse_JSON')?['instance']}</b> instance have been published.<br>\n@{body('GET_Updates')}</p>"
                                 },
                                 "path": "/v2/Mail",
                                 "authentication": "@parameters('$authentication')"
