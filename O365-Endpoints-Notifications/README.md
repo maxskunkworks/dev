@@ -120,4 +120,4 @@ Last update: _4/30/2019_
 + **4/16/2019**: Original commit
 + **4/17/2019**: Updated function build zip file, updated function resource
 + **4/24/2019**: Tested successfully. Submitted for peer review.
-+ **4/30/2019**: Confirmed end-to-end functionality. Updated images, added instance value to notification email.
++ **4/30/2019**: Confirmed end-to-end functionality. Updated images, added instance value to notification email. Added code to generate unique GUID for clientRequestId.
