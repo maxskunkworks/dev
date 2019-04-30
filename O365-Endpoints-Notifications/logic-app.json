@@ -146,8 +146,8 @@
                                 "method": "post",
                                 "body": {
                                     "To": "[parameters('notificationEmail')]",
-                                    "Subject": "O365 Endpoints RSS Notification - @{body('Parse_JSON')?['latest']}",
-                                    "Body": "<p>Changes to Office 365 IP Address and/or URLs have been published.<br>\n@{body('HTTP')}</p>"
+                                    "Subject": "O365 Endpoints RSS Notification - @{body('Parse_JSON')?['instance']} @{body('Parse_JSON')?['latest']}",
+                                    "Body": "<p>Changes to Office 365 IP addresses and/or URLs for the @{body('Parse_JSON')?['instance']} instance have been published.<br>\n@{body('HTTP')}</p>"
                                 },
                                 "path": "/v2/Mail",
                                 "authentication": "@parameters('$authentication')"
