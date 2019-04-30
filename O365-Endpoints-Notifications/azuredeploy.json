@@ -20,7 +20,7 @@
             ],
             "type": "string",
             "metadata": {
-                "description": "Instance for which you want to receive notifications."
+                "description": "The Office 365 instance for which you want to receive notifications."
             }
         }
     },
@@ -29,11 +29,6 @@
         "storageAccountName": "[concat(variables('uniqueString'),'storage')]",
         "logicAppName": "[concat(variables('uniqueString'),'-Logic-App')]",
         "functionAppName": "[concat(variables('uniqueString'),'-Function-App')]",
-        "O365ConnectionName": "[concat(variables('uniqueString'),'-O365-Connection')]",
-        "RssConnectionName": "[concat(variables('uniqueString'),'-RSS-Connection')]",
-        "appInsightsName": "[concat(variables('uniqueString'),'-App-Insights')]",
-        "hostingPlanName": "[concat(variables('uniqueString'),'-Hosting-Plan')]",
-        "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
         "resourceUri": "https://raw.githubusercontent.com/maxskunkworks/dev/master/O365-Endpoints-Notifications/"
     },
     "resources": [
