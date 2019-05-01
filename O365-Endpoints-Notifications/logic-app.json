@@ -33,7 +33,7 @@
         "feedUrl": "[concat('https://endpoints.office.com/version/',parameters('instance'),'?clientrequestid=',variables('clientRequestId'),'&allVersions=true&format=RSS')]",
         "versionUri": "[concat('https://endpoints.office.com/version/',parameters('instance'),'?allversions&clientrequestid=',variables('clientRequestId'))]",
         "functionUri": "[concat('https://',variables('functionAppName'),'.azurewebsites.net/api/FormatEmail?name=',variables('emailName'),'&instance=',parameters('instance'),'&clientrequestid=',variables('clientRequestId'),'&since=',variables('since'),'}')]",
-        "jsonURI": "[concat('https://endpoints.office.com/changes/',parameters('instance'),'/',variables('latest'),'?clientrequestid=',variables('clientRequestId'))]",
+        "jsonURI": "[concat('https://endpoints.office.com/changes/',parameters('instance'),'/',variables('latest'),'}','?clientrequestid=',variables('clientRequestId'))]",
         "actionGetVersion": "[concat('GET_Version_-_',parameters('instance'))]",
         "actionSendEmail": "[concat('Send_email_to_',parameters('notificationEmail'))]"
     },
