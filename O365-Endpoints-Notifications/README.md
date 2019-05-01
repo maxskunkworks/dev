@@ -111,8 +111,6 @@ Authors:
 
 https://github.com/maxskunkworks
 
-![alt text](https://raw.githubusercontent.com/oualabadmins/lab_deploy/master/common/images/maxskunkworkslogo-small.jpg "MAX Skunkworks")
-
 Last update: _4/30/2019_
 
 ## Changelog
