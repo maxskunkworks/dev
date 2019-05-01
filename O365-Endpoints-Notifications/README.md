@@ -64,10 +64,16 @@ The following resources are deployed as part of the solution:
 + **App Service**: The App Service function app converts the JSON output of endpoint updates to human-readable tables to make notification emails easier to read.
 + **App Service plan**: Web services to support the app service.
 + **Application Insights**: Provides monitoring and logging for solution components.
-+ **Logic app**: Triggered by the Office 365 Endpoints RSS feed, the logic app contains the workflow that notifies your specified email address when updates to the Office 365 endpoints are published.
++ **Logic app**: Triggered by updates to the Office 365 Endpoints RSS feed, the logic app contains the workflow that notifies your specified email address when updates to the Office 365 endpoints are published. The notification email body contains the updates in human-readable format, and the JSON file attachment contains the updates in raw JSON format.
 + **Storage account**: Storage for log files and usage/diagnostics data.
 
-    ![alt text](images/O365-notification-deployment.png "Deployment resources grouped by type")
+The image below shows the resources deployed by the template. Note the 13-digit unique prefix for each object.
+
+  ![alt text](images/O365-notification-deployment.png "Deployment resources grouped by type")
+
+The image below shows the logic app workflow in designer view. The name of the **GET Version - ...** action shows the specified instance, and the name of the **Send mail to ...** action contains the specified notification email address.
+
+  ![alt text](images/O365-logic-app.png "Logic app workflow")
 
 ## Solution notes
 
@@ -115,7 +121,8 @@ Last update: _4/30/2019_
 
 ## Changelog
 
-+ **4/16/2019**: Original commit
-+ **4/17/2019**: Updated function build zip file, updated function resource
++ **4/16/2019**: Original commit.
++ **4/17/2019**: Updated function build zip file, updated function resource.
 + **4/24/2019**: Tested successfully. Submitted for peer review.
 + **4/30/2019**: Confirmed end-to-end functionality. Updated images, added instance value to notification email. Added code to generate unique GUID for clientRequestId. Updated names of _get updates_ and _send email_ actions. Revised formatting in index.js.
++ **5/1/2019**: Added logic app action to fetch updates in JSON format, added JSON attachment to email. Added image showing the logic app workflow.
