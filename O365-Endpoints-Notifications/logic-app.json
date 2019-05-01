@@ -20,6 +20,7 @@
         "O365ConnectionName": "[concat(variables('uniqueString'),'-O365-Connection')]",
         "RssConnectionName": "[concat(variables('uniqueString'),'-RSS-Connection')]",
         "since": "@{body('Parse_JSON')?['versions'][1]",
+        "latest": "@{body('Parse_JSON')?['versions'][0]",
         "emailSplit": "[split(parameters('notificationEmail'),'@')]",
         "emailName": "[first(variables('emailSplit'))]",
 
@@ -32,6 +33,7 @@
         "feedUrl": "[concat('https://endpoints.office.com/version/',parameters('instance'),'?clientrequestid=',variables('clientRequestId'),'&allVersions=true&format=RSS')]",
         "versionUri": "[concat('https://endpoints.office.com/version/',parameters('instance'),'?allversions&clientrequestid=',variables('clientRequestId'))]",
         "functionUri": "[concat('https://',variables('functionAppName'),'.azurewebsites.net/api/FormatEmail?name=',variables('emailName'),'&instance=',parameters('instance'),'&clientrequestid=',variables('clientRequestId'),'&since=',variables('since'),'}')]",
+        "jsonURI": "[concat('https://endpoints.office.com/changes/',parameters('instance'),'/',variables('latest'),'?clientrequestid=',variables('clientRequestId'))]",
         "actionGetVersion": "[concat('GET_Version_-_',parameters('instance'))]",
         "actionSendEmail": "[concat('Send_email_to_',parameters('notificationEmail'))]"
     },
@@ -57,7 +59,7 @@
                         }
                     },
                     "triggers": {
-                        "When_a_feed_item_is_published": {
+                        "When_the_RSS_feed_is_updated": {
                             "recurrence": {
                                 "interval": 1,
                                 "frequency": "Minute"
@@ -115,7 +117,7 @@
                                 }
                             }
                         },
-                        "GET_Updates": {
+                        "GET_Updates_-_Formatted": {
                             "runAfter": {
                                 "Parse_JSON": [
                                     "Succeeded"
@@ -124,12 +126,24 @@
                             "type": "Http",
                             "inputs": {
                                 "method": "GET",
-                                "uri": "[variables('FunctionUri')]"
+                                "uri": "[variables('functionUri')]"
+                            }
+                        },
+                        "GET_Updates_-_JSON": {
+                            "runAfter": {
+                                "GET_Updates_-_Formatted": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Http",
+                            "inputs": {
+                                "method": "GET",
+                                "uri": "[variables('jsonUri')]"
                             }
                         },
                         "[variables('actionSendEmail')]": {
                             "runAfter": {
-                                "GET_Updates": [
+                                "GET_Updates_-_JSON": [
                                     "Succeeded"
                                 ]
                             },
@@ -147,9 +161,15 @@
                                 },
                                 "method": "post",
                                 "body": {
+                                    "Attachments": [
+                                        {
+                                            "ContentBytes": "@{base64(body('GET_Updates_-_JSON'))}",
+                                            "Name": "updates-@{body('Parse_JSON')?['latest']}.json"
+                                        }
+                                    ],
                                     "To": "[parameters('notificationEmail')]",
                                     "Subject": "Office 365 Endpoints Update - @{body('Parse_JSON')?['instance']} @{body('Parse_JSON')?['latest']}",
-                                    "Body": "<p>Changes to Office 365 IP addresses and/or URLs for the <b>@{body('Parse_JSON')?['instance']}</b> instance have been published.<br>For more information about the Office 365 IP and URL web service, please see <a href='http://aka.ms/ipurlws'>http://aka.ms/ipurlws</a><br>\n@{body('GET_Updates')}</p>"
+                                    "Body": "<p>Changes to Office 365 IP addresses and/or URLs for the <b>@{body('Parse_JSON')?['instance']}</b> instance have been published.<br>For more information about the Office 365 IP and URL web service, please see <a href='http://aka.ms/ipurlws'>http://aka.ms/ipurlws</a><br>\n@{body('GET_Updates_-_Formatted')}</p>"
                                 },
                                 "path": "/v2/Mail",
                                 "authentication": "@parameters('$authentication')"
