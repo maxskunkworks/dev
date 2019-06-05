@@ -77,10 +77,10 @@ The image below shows the logic app workflow in designer view. The name of the *
 
 ## Solution notes
 
-+ You can modify the Logic app with additional functionality, such as adding an approval process or additional outputs targeted for your organization's particular workflow for updating Office 365 endpoints.
-+ You can use a non-Office 365 email address by modifying the Logic app post-deployment with a standard email action instead of the Office 365 Email action.
++ You can modify the logic app with additional functionality, such as adding an approval process or additional outputs targeted for your organization's particular workflow for updating Office 365 endpoints.
++ You can use a non-Office 365 email address by modifying the logic app post-deployment with a different email action instead of the Office 365 _Send Email_ action.
 + See [Creating a Microsoft Flow to email yourself when an Office 365 IP/URL change occurs](https://github.com/pandrew1/Office365-IPURL-Samples/tree/master/FlowNotifications) for additional solution details and procedures for manually building the solution.
-+ You can get detailed realtime information about your Function app from the Kudu service at 'https://\<_unique-prefix_>-function-app.scm.azurewebsites.net/'.
++ You can get detailed realtime information about your function app from the Kudu service at 'https://\<_unique-prefix_>-function-app.scm.azurewebsites.net/'.
 
 ## Known issues
 
