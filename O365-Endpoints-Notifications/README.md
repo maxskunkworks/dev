@@ -109,7 +109,8 @@ The image below shows the logic app workflow in designer view. The name of the *
 
 `Tags: Office 365 endpoints, Office 365 IP Address and URL Web service`
 ___
-Developed by the **MAX Skunkworks Lab**  
+Developed by the **MARVEL Skunkworks Lab**
+![alt text](images/maxskunkworkslogo-small.jpg "MARVEL Skunkworks")
 Authors:
 
 + Kelley Vice (kvice@microsoft.com)
