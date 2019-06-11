@@ -82,7 +82,7 @@
                                 "queries": {
                                     "feedUrl": "[variables('feedUrl')]"
                                 },
-                                "authentication": "@parameters('$authentication')"
+                                "authentication": "none"
                             }
                         }
                     },
