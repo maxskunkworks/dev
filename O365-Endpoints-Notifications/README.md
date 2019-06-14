@@ -1,7 +1,7 @@
 # Office 365 Update Notification (v1.1)
 
 + **Time to deploy**: 2 minutes
-+ **Cost**: ~$1.00 per month
++ **Cost**: ~$4.00 per month
 
 The **Office 365 Update Notification** template provisions a set of Azure resources that sends email notifications to a specified Office 365 email address when updates are published to the [Office 365 Endpoints RSS feed](https://endpoints.office.com/version/worldwide?clientRequestId=b10c5ed1-bad1-445f-b386-b919946339a7&allVersions=true&format=RSS). You can specify the Office 365 instance for which you want to be notified (i.e. Worldwide, China etc.).
 
