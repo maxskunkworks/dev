@@ -52,10 +52,6 @@
                         "$connections": {
                             "defaultValue": {},
                             "type": "Object"
-                        },
-                        "$authentication": {
-                            "defaultValue": "ActiveDirectoryOAuth",
-                            "type": "string"
                         }
                     },
                     "triggers": {
@@ -172,7 +168,7 @@
                                     "Body": "<p>Changes to Office 365 IP addresses and/or URLs for the <b>@{body('Parse_JSON')?['instance']}</b> instance have been published.<br>For more information about the Office 365 IP and URL web service, please see <a href='http://aka.ms/ipurlws'>http://aka.ms/ipurlws</a><br>\n@{body('GET_Updates_-_Formatted')}</p>"
                                 },
                                 "path": "/v2/Mail",
-                                "authentication": "@parameters('$authentication')"
+                                "authentication": "ActiveDirectoryOAuth"
                             }
                         }
                     },
