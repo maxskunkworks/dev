@@ -1,4 +1,4 @@
-# Office 365 Update Notification (v1.1)
+# Office 365 Update Notification (v1.2)
 
 + **Time to deploy**: 2 minutes
 + **Cost**: ~$4.00 per month
@@ -120,7 +120,7 @@ Authors:
 
 https://github.com/maxskunkworks
 
-Last update: _6/11/2019_
+Last update: _8/6/2019_
 
 ## Changelog
 
@@ -130,3 +130,4 @@ Last update: _6/11/2019_
 + **4/30/2019**: Confirmed end-to-end functionality. Updated images, added instance value to notification email. Added code to generate unique GUID for clientRequestId. Updated names of _get updates_ and _send email_ actions. Revised formatting in index.js.
 + **5/1/2019**: Added logic app action to fetch updates in JSON format, added JSON attachment to email. Added image showing the logic app workflow.
 + **6/11/2019**: Corrected logic app issue where trigger authentication was set to "unspecified" during deployment, causing trigger failures.
++ **8/6/2019**: Added logic app authentication parameter with value _ActiveDirectoryOAuth_.
