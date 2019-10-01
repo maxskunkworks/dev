@@ -14,7 +14,7 @@ The **Office 365 Update Notification** template provisions a set of Azure resour
 <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
-**NOTE**: You must specify an Office 365 email account for the solution to work without modification.
+**NOTE**: You must specify and authenticate to an Office 365 email account for the solution to work without modification.
 
 ## Usage
 
@@ -50,7 +50,7 @@ Deploying the solution is very simple, and no further configuration is required.
 
     ![alt text](images/O365-connection-authenticated.png "Authorize the connection")
 
-The Office 365 authorization should be good for one year, at which point you will need to return to the O365 API Connection object and reauthorize the connection.
+The Office 365 authorization until your password changes, at which point you will need to return to the O365 API Connection object and reauthorize the connection.
 
 ### Testing the solution
 
@@ -120,7 +120,7 @@ Authors:
 
 https://github.com/maxskunkworks
 
-Last update: _8/6/2019_
+Last update: _10/1/2019_
 
 ## Changelog
 
@@ -128,6 +128,7 @@ Last update: _8/6/2019_
 + **4/17/2019**: Updated function build zip file, updated function resource.
 + **4/24/2019**: Tested successfully. Submitted for peer review.
 + **4/30/2019**: Confirmed end-to-end functionality. Updated images, added instance value to notification email. Added code to generate unique GUID for clientRequestId. Updated names of _get updates_ and _send email_ actions. Revised formatting in index.js.
-+ **5/1/2019**: Added logic app action to fetch updates in JSON format, added JSON attachment to email. Added image showing the logic app workflow.
++ **5/1/2019**:  Added logic app action to fetch updates in JSON format, added JSON attachment to email. Added image showing the logic app workflow.
 + **6/11/2019**: Corrected logic app issue where trigger authentication was set to "unspecified" during deployment, causing trigger failures.
-+ **8/6/2019**: Hard-coded logic app authentication value with _ActiveDirectoryOAuth_.
++ **8/6/2019**:  Hard-coded logic app authentication value with _ActiveDirectoryOAuth_.
++ **10/1/2019**: Updated README with password change caveat.
