@@ -115,12 +115,12 @@ Developed by the **MARVEL Skunkworks Lab**
 
 Authors:
 
-+ Kelley Vice (kvice@microsoft.com)
-+ Paul Andrew (pandrew@microsoft.com)
++ Kelley Vice
++ Paul Andrew
 
-https://github.com/maxskunkworks
+https://techcommunity.microsoft.com/t5/deployment-networking/bd-p/DeploymentNetworking
 
-Last update: _10/1/2019_
+Last update: _06/25/2024_
 
 ## Changelog
 
@@ -132,3 +132,4 @@ Last update: _10/1/2019_
 + **6/11/2019**: Corrected logic app issue where trigger authentication was set to "unspecified" during deployment, causing trigger failures.
 + **8/6/2019**:  Hard-coded logic app authentication value with _ActiveDirectoryOAuth_.
 + **10/1/2019**: Updated README with password change caveat.
++ **06/25/2024**: Removed email addresses from page, added techcommunity link
