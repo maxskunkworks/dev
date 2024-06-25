@@ -1,4 +1,6 @@
-# Office 365 Update Notification (v1.2)
+# Office 365 Update Notification (v1.2) (deprecated)
+
+NOTE: This code is no longer maintained and may not function as expected.
 
 + **Time to deploy**: 2 minutes
 + **Cost**: ~$4.00 per month
